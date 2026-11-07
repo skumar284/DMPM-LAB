@@ -1,0 +1,92 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import warnings
+from sklearn.impute import SimpleImputer
+warnings.filterwarnings('ignore')
+
+df = pd.read_csv("PB_1996_2019_NH4.csv")
+
+df
+
+print(df.head())
+
+print(df.info())
+
+print(df.isnull().sum())
+
+df.drop_duplicates(inplace=False)
+
+df = df.fillna(0)
+
+print(df.describe())
+
+print(df)
+
+df.isna()
+
+imp = SimpleImputer(missing_values=np.nan, strategy='mean')
+
+df
+
+imp.fit([[1, 2], [np.nan, 3], [7, 6]])
+
+X = [[np.nan, 2], [6, np.nan], [7, 6]]
+
+print(imp.transform(X))
+
+print(df.max())
+
+print(df.min())
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+IN_PATH = "PB_1996_2019_NH4.csv"
+
+# 1. LOAD
+df = pd.read_csv(IN_PATH, sep=";")
+
+# 2. CLEAN
+df["Date"] = pd.to_datetime(df["Date"], format="%d.%m.%Y")
+df = df.sort_values(["ID_Station", "Date"]).reset_index(drop=True)
+dupes = df.duplicated(subset=["ID_Station", "Date"]).sum()
+df_clean = df.dropna(subset=["NH4"]).copy()
+df_clean["Year"]   = df_clean["Date"].dt.year
+df_clean["Month"]  = df_clean["Date"].dt.month
+df_clean["Season"] = df_clean["Month"] % 12 // 3 + 1
+
+Q1, Q3 = df_clean["NH4"].quantile([0.25, 0.75])
+upper_bound = Q3 + 1.5 * (Q3 - Q1)
+df_clean["Outlier"] = df_clean["NH4"] > upper_bound
+
+# 3. DESCRIPTIVE STATS
+overall_stats = df_clean["NH4"].describe()
+station_stats = df_clean.groupby("ID_Station")["NH4"].agg(
+    ["count", "mean", "median", "std", "min", "max"])
+
+# 4. TIME SERIES
+yearly_avg        = df_clean.groupby("Year")["NH4"].mean()
+yearly_by_station = df_clean.pivot_table(index="Year", columns="ID_Station", values="NH4", aggfunc="mean")
+season_avg        = df_clean.groupby("Season")["NH4"].mean()
+slope, intercept  = np.polyfit(yearly_avg.index, yearly_avg.values, 1)   # trend
+
+# 5. SPATIAL (Distance vs NH4)
+spatial = pd.concat([
+    df_clean.groupby("ID_Station")["Distance"].first(),
+    df_clean.groupby("ID_Station")["NH4"].mean()
+], axis=1)
+spatial.columns = ["Distance", "Mean_NH4"]
+corr = spatial["Distance"].corr(spatial["Mean_NH4"])
+
+# 6. COMPLIANCE (edit threshold to your standard)
+THRESHOLD = 1.0
+df_clean["Exceeds_Threshold"] = df_clean["NH4"] > THRESHOLD
+exceedance_rate = df_clean.groupby("ID_Station")["Exceeds_Threshold"].mean() * 100
+
+# 7. VISUALS
+plt.plot(yearly_avg.index, yearly_avg.values, marker="o")
+df_clean.boxplot(column="NH4", by="ID_Station")
+plt.scatter(spatial["Distance"], spatial["Mean_NH4"])
