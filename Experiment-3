@@ -1,0 +1,282 @@
+pip install matplotlib seaborn
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+months = ["Jan", "Feb", "Mar", "Apr", "May"]
+sales = [100, 150, 130, 180, 200]
+
+sns.lineplot(x=months, y=sales, marker="o")
+
+plt.xlabel("Months")
+plt.ylabel("Sales")
+plt.title("Monthly Sales")
+
+plt.show()
+
+import matplotlib.pyplot as plt
+
+# Data
+months = ["Jan", "Feb", "Mar", "Apr", "May"]
+sales = [100, 150, 130, 180, 200]
+
+# Create line chart
+plt.plot(months, sales, marker="o")
+
+# Add labels and title
+plt.xlabel("Months")
+plt.ylabel("Sales")
+plt.title("Monthly Sales")
+
+# Display chart
+plt.show()
+
+import matplotlib.pyplot as plt
+
+# Data
+subjects = ["Math", "Science", "English", "Computer"]
+marks = [85, 78, 92, 95]
+
+# Create bar chart
+plt.bar(subjects, marks)
+
+# Add labels and title
+plt.xlabel("Subjects")
+plt.ylabel("Marks")
+plt.title("Student Marks")
+
+plt.show()
+
+import matplotlib.pyplot as plt
+
+subjects = ["Math", "Science", "English", "Computer"]
+marks = [85, 78, 92, 95]
+
+plt.barh(subjects, marks)
+
+plt.xlabel("Marks")
+plt.ylabel("Subjects")
+plt.title("Student Marks")
+
+plt.show()
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+subjects = ["Math", "Science", "English", "Computer"]
+marks = [85, 78, 92, 95]
+
+sns.barplot(x=subjects, y=marks)
+
+plt.title("Student Marks")
+plt.show()
+
+import matplotlib.pyplot as plt
+
+marks = [45, 50, 55, 60, 62, 65, 68, 70,
+         72, 75, 78, 80, 82, 85, 88, 90,
+         92, 95, 98, 100]
+
+plt.hist(marks, bins=5, edgecolor="black")
+
+plt.xlabel("Marks")
+plt.ylabel("Number of Students")
+plt.title("Distribution of Marks")
+
+plt.show()
+
+import matplotlib.pyplot as plt
+
+marks = [45, 50, 55, 60, 62, 65, 68, 70,
+         72, 75, 78, 80, 82, 85, 88, 90,
+         92, 95, 98, 100]
+
+plt.hist(marks, bins=5, edgecolor="black")
+
+plt.xlabel("Marks")
+plt.ylabel("Number of Students")
+plt.title("Distribution of Marks")
+
+plt.show()
+
+import matplotlib.pyplot as plt
+
+# Data
+subjects = ["Math", "Science", "English", "Computer"]
+marks = [25, 20, 30, 25]
+
+# Create pie chart
+plt.pie(
+    marks,
+    labels=subjects,
+    autopct="%1.1f%%"
+)
+
+plt.title("Subject-wise Marks Distribution")
+
+plt.show()
+
+import matplotlib.pyplot as plt
+
+subjects = ["Math", "Science", "English", "Computer"]
+marks = [25, 20, 30, 25]
+
+colors = ["red", "blue", "green", "orange"]
+
+plt.pie(
+    marks,
+    labels=subjects,
+    colors=colors,
+    autopct="%1.1f%%",
+    startangle=90
+)
+
+plt.title("Subject Distribution")
+
+plt.show()
+
+import matplotlib.pyplot as plt
+
+hours = [1, 2, 3, 4, 5, 6, 7, 8]
+marks = [40, 45, 50, 55, 65, 70, 80, 90]
+
+plt.scatter(hours, marks)
+
+plt.xlabel("Hours Studied")
+plt.ylabel("Marks")
+plt.title("Hours Studied vs Marks")
+
+plt.show()
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+hours = [1, 2, 3, 4, 5, 6, 7, 8]
+marks = [40, 45, 50, 55, 65, 70, 80, 90]
+
+sns.scatterplot(x=hours, y=marks)
+
+plt.xlabel("Hours Studied")
+plt.ylabel("Marks")
+plt.title("Hours Studied vs Marks")
+
+plt.show()
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+hours = [1, 2, 3, 4, 5, 6, 7, 8]
+marks = [40, 45, 50, 55, 65, 70, 80, 90]
+
+sns.regplot(x=hours, y=marks)
+
+plt.xlabel("Hours Studied")
+plt.ylabel("Marks")
+plt.title("Study Hours vs Marks")
+
+plt.show()
+
+import matplotlib.pyplot as plt
+
+marks = [45, 50, 55, 60, 62, 65, 68, 70,
+         72, 75, 78, 80, 82, 85, 88, 95, 120]
+
+plt.boxplot(marks)
+
+plt.ylabel("Marks")
+plt.title("Box Plot of Marks")
+
+plt.show()
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+marks = [45, 50, 55, 60, 62, 65, 68, 70,
+         72, 75, 78, 80, 82, 85, 88, 95, 120]
+
+sns.boxplot(y=marks)
+
+plt.ylabel("Marks")
+plt.title("Box Plot of Marks")
+
+plt.show()
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+math = [60, 65, 70, 72, 75, 80, 85]
+science = [55, 60, 65, 70, 72, 78, 82]
+english = [65, 68, 72, 75, 80, 85, 90]
+
+data = [math, science, english]
+
+plt.boxplot(
+    data,
+    labels=["Math", "Science", "English"]
+)
+
+plt.ylabel("Marks")
+plt.title("Comparison of Subject Marks")
+
+plt.show()
+
+import matplotlib.pyplot as plt
+
+# Create figure with 2 rows and 2 columns
+fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+
+# -------------------------
+# 1. Line Chart
+# -------------------------
+months = ["Jan", "Feb", "Mar", "Apr", "May"]
+sales = [100, 150, 130, 180, 200]
+
+axes[0, 0].plot(months, sales, marker="o")
+axes[0, 0].set_title("Monthly Sales")
+axes[0, 0].set_xlabel("Month")
+axes[0, 0].set_ylabel("Sales")
+
+
+# -------------------------
+# 2. Bar Chart
+# -------------------------
+subjects = ["Math", "Science", "English", "Computer"]
+marks = [85, 78, 92, 95]
+
+axes[0, 1].bar(subjects, marks)
+axes[0, 1].set_title("Student Marks")
+axes[0, 1].set_xlabel("Subjects")
+axes[0, 1].set_ylabel("Marks")
+
+
+# -------------------------
+# 3. Histogram
+# -------------------------
+data = [45, 50, 55, 60, 62, 65, 68, 70,
+        72, 75, 78, 80, 82, 85, 88, 90]
+
+axes[1, 0].hist(data, bins=5, edgecolor="black")
+axes[1, 0].set_title("Marks Distribution")
+axes[1, 0].set_xlabel("Marks")
+axes[1, 0].set_ylabel("Frequency")
+
+
+# -------------------------
+# 4. Scatter Plot
+# -------------------------
+hours = [1, 2, 3, 4, 5, 6, 7, 8]
+scores = [40, 45, 50, 55, 65, 70, 80, 90]
+
+axes[1, 1].scatter(hours, scores)
+axes[1, 1].set_title("Study Hours vs Marks")
+axes[1, 1].set_xlabel("Hours")
+axes[1, 1].set_ylabel("Marks")
+
+
+# Adjust spacing
+plt.tight_layout()
+
+# Display
+plt.show()
+
+fig, axes = plt.subplots(2, 2)
