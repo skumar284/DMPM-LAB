@@ -1,0 +1,62 @@
+import numpy as np
+
+class Normalization:
+
+
+  def __init__(self,data,array):
+    self.array=array
+    self.data=data
+
+
+  def min_max(self,range):
+    normalized_data=(((self.data-np.min(self.array))/(np.max(self.array)-np.min(self.array)))*(range[1]-range[0]))+range[0]
+    return normalized_data
+
+
+  def z_score(self):
+    normalized_data=(self.data-np.mean(self.array))/np.std(self.array)
+    return normalized_data
+
+
+  def single_decimal_scaling(self):
+    return (self.data/10**(np.floor(np.log10(self.data))+1))
+
+
+  def multi_decimal_scaling(self,datas):
+    for data in datas:
+      print(data/10**(np.floor(np.log10(np.max(datas)))+1))
+
+n1=Normalization(70,[20,37,67,56,100])
+
+print(n1.min_max([0,1]))
+
+print(n1.single_decimal_scaling())
+
+n1.multi_decimal_scaling([1,2,7,465,8765])
+
+"""  CHI-**SQUARE**"""
+
+pip install scipy
+
+from scipy.stats import chisquare
+
+class Chi_square:
+  def __init__(self,alpha,df):
+    self.alpha=alpha#it is called level of significance
+    self.df=df
+  def chi_square_2_feature(self):
+    row_total=np.sum(self.df,axis=1)
+    column_total=np.sum(self.df,axis=0)
+    total_sum=np.sum(self.df)
+    sum=0
+    rows, columns = np.shape(self.df)
+    for i in range(rows):
+        for j in range(columns):
+          expected_value=row_total[i]*column_total[j]/total_sum
+          sum+=(self.df[i][j]-expected_value)**2/expected_value
+    ans=sum
+    critical_value = chi2.ppf(1 - self.alpha, (rows-1)*(columns-1))
+    if(ans>critical_value):
+      print("Reject the null hypothesis")
+    else:
+      print("Accept the null hypothesis")
